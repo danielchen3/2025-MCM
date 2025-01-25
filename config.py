@@ -10,7 +10,7 @@ R = 0.5
 
 # Bounds
 tourist_ratio_min = 0.01
-tourist_ratio_max = 1.2
+tourist_ratio_max = 1.0
 
 m1_min = 500
 m1_max = 1000
@@ -27,8 +27,11 @@ alpha_max = 1
 B_min = 0
 B_max = 1
 
-k_min = 1e-6
-k_max = 1e-5
+B3_min = 0.15
+B3_max = 1
+
+k_min = 1e-4
+k_max = 1e-2
 
 
 # functions

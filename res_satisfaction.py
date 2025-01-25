@@ -43,10 +43,10 @@ def additional_income(B3, rate, m1, m2, N, k3, t=0):
     I_anti = B3 * N_anti * (m1 * heuristic(rate, t) + m2 * (1 - heuristic(rate, t)))
     I = B3 * N * (m1 * heuristic(rate, t) + m2 * (1 - heuristic(rate, t)))
     # print(f"I is {I}, I_anti is {I_anti}")
-    if I <= I_anti:
+    if I >= I_anti:
         return 1
     else:
-        return 2 / (1 + math.exp(k3 * (I - I_anti)))
+        return 1 / (1 + k3 * math.sqrt((I_anti - I)))
 
 
 def get_obj3(params, t=0):
