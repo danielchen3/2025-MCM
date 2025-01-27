@@ -4,7 +4,8 @@ from scipy.optimize import differential_evolution, dual_annealing
 
 
 def get_cost_PA(tourist_ratio, ratio, m1, m2, t=0):
-    N = P * tourist_ratio
+    import config
+    N = config.P * tourist_ratio
     return N * (m1 * heuristic(ratio, t) + m2 * (1 - heuristic(ratio, t)))
 
 
@@ -32,6 +33,7 @@ bounds = [
 
 
 def get_obj2(params, t=0):
+    from config import P, R, A, N0
     (
         tourist_ratio,
         m1,
@@ -55,8 +57,109 @@ def get_obj2(params, t=0):
 
     return get_cost_PA(tourist_ratio, rate, m1, m2, t) * technologies
 
+def get_obj2_2(params, t=0):
+    from config import P, R, A, N0
+    (
+        tourist_ratio,
+        m1,
+        m2,
+        rate,
+        B11,
+        B12,
+        B13,
+        B2,
+        alpha_g,
+        alpha_w,
+        alpha_r,
+        alpha_infra,
+    ) = params
+    functions = [f_g, f_w, f_r]
+    alphas = [alpha_g, alpha_w, alpha_r]
+    Bs = [B11, B12, B13]
+    technologies = 0.0
+    for i in range(3):
+        technologies += alphas[i] * technology(Bs[i], functions[i])
+
+    return get_cost_PA(tourist_ratio, rate, m1, m2, t) * technologies
+
+def get_obj2_get1(params, t=0):
+    from config import P, R, A, N0
+    (
+        tourist_ratio,
+        m1,
+        m2,
+        rate,
+        B11,
+        B12,
+        B13,
+        B2,
+        alpha_g,
+        alpha_w,
+        alpha_r,
+        alpha_infra,
+    ) = params
+    functions = [f_g]
+    alphas = [alpha_g]
+    Bs = [B11]
+    technologies = 0.0
+    for i in range(1):
+        technologies += alphas[i] * technology(Bs[i], functions[i])
+
+    return get_cost_PA(tourist_ratio, rate, m1, m2, t) * technologies
+
+def get_obj2_get2(params, t=0):
+    from config import P, R, A, N0
+    (
+        tourist_ratio,
+        m1,
+        m2,
+        rate,
+        B11,
+        B12,
+        B13,
+        B2,
+        alpha_g,
+        alpha_w,
+        alpha_r,
+        alpha_infra,
+    ) = params
+    functions = [f_w]
+    alphas = [alpha_w]
+    Bs = [B12]
+    technologies = 0.0
+    for i in range(1):
+        technologies += alphas[i] * technology(Bs[i], functions[i])
+
+    return get_cost_PA(tourist_ratio, rate, m1, m2, t) * technologies
+
+def get_obj2_get3(params, t=0):
+    from config import P, R, A, N0
+    (
+        tourist_ratio,
+        m1,
+        m2,
+        rate,
+        B11,
+        B12,
+        B13,
+        B2,
+        alpha_g,
+        alpha_w,
+        alpha_r,
+        alpha_infra,
+    ) = params
+    functions = [f_r]
+    alphas = [alpha_r]
+    Bs = [B13]
+    technologies = 0.0
+    for i in range(1):
+        technologies += alphas[i] * technology(Bs[i], functions[i])
+
+    return get_cost_PA(tourist_ratio, rate, m1, m2, t) * technologies
+
 
 def neg_get_obj2(params, t=0):
+    from config import P, R, A, N0
     (
         tourist_ratio,
         m1,
